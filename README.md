@@ -1,2 +1,2 @@
-# cubets-core
-Cubets Core adalah backend engine untuk game Cubets, dibangun menggunakan ASP .NET Core Web API (.NET 9) dengan database MySQL dan dukungan SignalR untuk komunikasi realtime antar pemain. Backend ini dirancang dengan arsitektur modular layered, memisahkan logika bisnis, data access, dan API controller per modul agar pengembangan lebih terstruktur, mudah di-maintain, dan scalable.
+Cubets Core adalah backend engine untuk game [Cubets](https://github.com/mikeu-dev/cubets)
+, dibangun menggunakan ASP .NET Core Web API (.NET 9) dengan database MySQL dan dukungan SignalR untuk komunikasi realtime antar pemain. Backend ini mengadopsi arsitektur modular layered, memisahkan logika bisnis, data access, dan API controller per modul, sehingga pengembangan menjadi lebih terstruktur, mudah di-maintain, dan scalable.
