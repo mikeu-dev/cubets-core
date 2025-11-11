@@ -1,28 +1,49 @@
+using cubets_core.Data;
 using cubets_core.Hubs;
-using cubets_core.Modules.Score.Services;
-using MySqlConnector;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMySqlDataSource(builder.Configuration.GetConnectionString("Default")!);
+// EF Core / MySQL
+builder.Services.AddDbContext<CubetsDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("Default"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default"))
+    ));
 
+// SignalR
 builder.Services.AddSignalR();
 
+// Controllers
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// OpenAPI / Swagger
+builder.Services.AddEndpointsApiExplorer(); // wajib sebelum builder.Build()
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
+
+// Swagger UI hanya di Development
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();      // JSON OpenAPI
+    app.UseSwaggerUI();    // Swagger UI di /swagger
 }
 
+// Middleware
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
+// Redirect root "/" ke Swagger UI
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
+
+// Endpoint Controller dan Hub
 app.MapControllers();
 app.MapHub<GameHub>("/gamehub");
+
 app.Run();
