@@ -1,8 +1,12 @@
-﻿namespace cubets_core.Modules.GameState.Models
+﻿
+namespace cubets_core.Modules.GameState.Models
 {
     public class PlayerState
     {
+        public int Id { get; set; }
         public int PlayerId { get; set; }
+
+        public Player.Models.Player Player { get; set; } = null!;
 
         public float X { get; set; }
 
