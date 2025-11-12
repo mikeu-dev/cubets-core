@@ -1,30 +1,27 @@
-﻿using cubets_core.Modules.Score.DTOs;
-using cubets_core.Modules.Score.Models;
+﻿using cubets_core.Common;
 using cubets_core.Modules.Score.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cubets_core.Modules.Score.Controllers
 {
-    public class ScoreController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ScoreController: ControllerBase
     {
-        private readonly ScoreService _scoreService;
+        private readonly IResponseService _response;
+        private readonly IScoreService _scoreService;
 
-        public ScoreController(ScoreService scoreService) => _scoreService = scoreService;
+        public ScoreController(IScoreService scoreService, IResponseService response) 
+        {
+            _response = response;
+            _scoreService = scoreService; 
+        }
 
         [HttpGet("playerId")]
-        public ActionResult<ScoreEntryDto> GetHighScore(int playerId)
+        public async Task<IActionResult> GetTopScores(int playerId)
         {
-            var highScore = _scoreService.GetTopScoresAsync(playerId);
-            if (highScore == null) return NotFound();
-            return Ok(highScore);
-        }
-        private ActionResult<ScoreEntryDto> Ok(Task<List<ScoreEntry>> highScore)
-        {
-            throw new NotImplementedException();
-        }
-        private ActionResult<ScoreEntryDto> NotFound()
-        {
-            throw new NotImplementedException();
+            var result = await _scoreService.GetTopScoresAsync(playerId);
+            return Ok(_response.Success(result, "Get Top Scores Successful!"));
         }
     }
 }
