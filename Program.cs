@@ -1,3 +1,4 @@
+using cubets_core.Common;
 using cubets_core.Data;
 using cubets_core.Helpers;
 using cubets_core.Hubs;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<CubetsDbContext>(options =>
         builder.Configuration.GetConnectionString("Default"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default"))
     ));
+builder.Services.AddScoped<IResponseService, ResponseService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
