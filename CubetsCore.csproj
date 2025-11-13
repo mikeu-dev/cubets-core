@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>cubets_core</RootNamespace>
+    <RootNamespace>CubetsCore</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
