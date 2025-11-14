@@ -3,6 +3,7 @@ using cubets_core.Modules.GameState.Models;
 using cubets_core.Modules.Score.Models;
 using cubets_core.Modules.Player.Models;
 using cubets_core.Modules.Auth.Models;
+using CubetsCore.Modules.Auth.Models;
 
 namespace cubets_core.Data
 {
@@ -13,6 +14,8 @@ namespace cubets_core.Data
         }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<RevokedToken> RevokedTokens { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerState> PlayerStates { get; set; }
         public DbSet<ScoreEntry> ScoreEntries { get; set; }
