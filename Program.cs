@@ -1,12 +1,7 @@
-using cubets_core.Common;
 using cubets_core.Data;
-using cubets_core.Helpers;
 using cubets_core.Hubs;
-using cubets_core.Modules.Auth.Services;
-using cubets_core.Modules.Player.Services;
-using cubets_core.Modules.Score.Services;
+using CubetsCore.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -19,10 +14,7 @@ builder.Services.AddDbContext<CubetsDbContext>(options =>
         builder.Configuration.GetConnectionString("Default"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default"))
     ));
-builder.Services.AddScoped<IResponseService, ResponseService>();
-builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<PlayerService>();
+builder.Services.AddApplicationServices();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
