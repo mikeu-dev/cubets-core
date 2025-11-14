@@ -1,6 +1,8 @@
 ﻿using cubets_core.Helpers;
 using cubets_core.Modules.Auth.DTOs;
 using cubets_core.Modules.Auth.Models;
+using CubetsCore.Modules.Auth.DTOs;
+using CubetsCore.Modules.Auth.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
@@ -96,6 +98,27 @@ namespace cubets_core.Modules.Auth.Services
                 PlayerId = player.Id
             };
         }
+
+        public async Task<LogoutResponseDto> LogoutAsync(RevokedTokenRequestDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Token))
+                throw new Exception("Token diperlukan!");
+
+            _dbContext.RevokedTokens.Add(new RevokedToken
+            {
+                Token = dto.Token,
+                RevokedAt = DateTime.UtcNow
+            });
+
+            await _dbContext.SaveChangesAsync();
+
+            return new LogoutResponseDto
+            {
+                Success = true,
+                Message = "Logout berhasil."
+            };
+        }
+
 
         private string HashPassword(string password)
         {

@@ -2,6 +2,7 @@
 using cubets_core.Modules.Auth.DTOs;
 using cubets_core.Modules.Auth.Models;
 using cubets_core.Modules.Auth.Services;
+using CubetsCore.Modules.Auth.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,5 +40,13 @@ namespace cubets_core.Modules.Auth.Controllers
             var result = await _authService.GuestLoginAsync();
             return Ok(_response.Success(result, "Login as Guest Successful!"));
         }
+
+        [HttpDelete("logout")]
+        public async Task<IActionResult> Logout([FromBody] RevokedTokenRequestDto dto)
+        {
+            var result = await _authService.LogoutAsync(dto);
+            return Ok(_response.Success(result, "Anda berhasil keluar!"));
+        }
+
     }
 }
